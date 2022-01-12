@@ -1,0 +1,52 @@
+
+Karwan Hedayat Trading Company(KHC)
+
+Databse tables structure in KHC.
+
+
+
+==> Models
+
+    => User
+        - ID
+        - name
+        - email
+        - email_verified_at
+        - password
+        - rememberToken
+        - profile_photo
+        - role
+        - timestaps
+
+    => Post
+        - ID
+        - user_id
+        - title
+        - content
+
+    => Tag
+        - ID
+        - post_id
+        - tags
+
+    
+
+    => Image
+        - ID
+        - post_id
+        - path
+        - image
+
+    => Slider
+        - ID
+        - text
+        - image
+
+    => Advertisement
+        - ID
+        - ads_photo
+
+==> Creating Relationships
+
+
+
