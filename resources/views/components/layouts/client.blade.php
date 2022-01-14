@@ -39,7 +39,7 @@
         </div>
 
         {{-- Content here --}}
-        <div class="container max-w-6xl border mx-auto h-screen bg-white">
+        <div class="container max-w-6xl border mx-auto h-auto bg-white">
 
             <div class="flex flex-row justify-between">
 
