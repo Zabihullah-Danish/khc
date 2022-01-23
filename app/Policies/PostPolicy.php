@@ -4,21 +4,30 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\KhcModel;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
+    public function before(User $user,$ability)
     {
-        //
+        if($user->is_admin)
+        {
+            return true;
+        }
+    }
+
+    public function viewPostModel(User $user)
+    {
+        return $user->khc_model->posts === 1;
+        //  ? Response::allow() : Response::deny(" you're not allowed this section");
+    }
+    public function PostModel(User $user)
+    {
+        return $user->khc_model->posts === 1 ? Response::allow() : Response::deny(" you're not allowed this section");
     }
 
     /**
@@ -30,7 +39,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -41,7 +50,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        //
+        
     }
 
     /**
@@ -53,7 +62,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id && route('posts.edit') === true;
     }
 
     /**

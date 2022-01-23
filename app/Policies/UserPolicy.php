@@ -3,29 +3,26 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Permission;
+use App\Models\KhcModel;
 use Illuminate\Auth\Access\Response;
+use App\Http\Controllers\KhcModelController;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-
-    public function index(Permission $permission, User $user)
+    public function before(User $user,$ability)
     {
-        // return $user->is_admin === 1
-        //             ? Response::allow()
-        //             : Response::deny(" You're not allowed to this action");
-      
+        if($user->isAdministrator)
+        {
+            return true;
+        }
+    }
 
-        // return $permission->user_management === 0 && $permission->user_id === $user->id ? Response::allow() : Response::deny("You're not allowed");
+    public function viewUserModel(User $user)
+    {
+        return $user->khc_model->users === 1 ? Response::allow() : Response::deny("Not allowed to users section");
     }
 
     public function viewAny(User $user)
@@ -51,18 +48,16 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function createUser(User $user)
     {
-        //
+        
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
+    public function editAdmin(User $user)
+    {
+        return $user->name === "Zabihullah Danish";
+    }
+    
     public function update(User $user, User $model)
     {
         //

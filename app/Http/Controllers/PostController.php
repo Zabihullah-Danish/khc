@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -17,10 +21,15 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        if(!auth()->user()->khc_model->posts)
+        {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
         $user_id = Auth::user()->id;
         $posts = Post::where( 'user_id',$user_id)->get();
-        return view('admin.posts.index',compact('posts'));
+        return view('admin.posts.index',compact('posts'));    
     }
 
     /**
@@ -28,8 +37,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+       
         return view('admin.posts.create');
     }
 
@@ -41,6 +51,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        
         $tags = explode(',',$request->tags);
 
         if($request->has('image'))
@@ -75,6 +86,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if(!Gate::authorize('view',$post))
+        {
+            abort(403);
+        }
         return view('admin.posts.view',compact('post'));
     }
 
@@ -86,6 +101,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        
         $tags = $post->tags->implode('tag', ',');
         return view('admin.posts.edit',compact('post','tags'));
     }
@@ -99,6 +115,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        
         $tags = explode(",", $request->tags);
 
         if($request->has('image'))

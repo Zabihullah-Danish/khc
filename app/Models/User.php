@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function khc_model()
+    {
+        return $this->hasOne(KhcModel::class);
+    }
+
     
     
 }

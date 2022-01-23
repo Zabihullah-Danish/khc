@@ -20,12 +20,12 @@
                 @error('password')
                 <p class="text-red-500 pl-2">{{ $message }}</p>
                 @enderror
-                <select class="p-3 border rounded-xl bg-stone-50 focus:bg-stone-100  focus:outline-none" name="userType" class="">
-                    <option disabled selected>---User Type---</option>
+                <select class="p-3 border @error('userRole') border-red-500 @enderror rounded-xl bg-stone-50 focus:bg-stone-100  focus:outline-none" name="userRole" class="">
+                    <option disabled selected>--- User Role ---</option>
                     <option value="1">Admin</option>
                     <option value="0">Other</option>
                 </select>
-                @error('userType')
+                @error('userRole')
                     <p class="text-red-500">{{ $message }}</p>
                 @enderror
                 <div class="pl-2">

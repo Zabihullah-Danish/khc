@@ -64,15 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-row">
-                            <div class="w-2/12 p-3">
-                                <label for="is_admin">Is Admin</label>
-                            </div>
-                            <div class="w-10/12 pl-5 py-3 pr-10">
-                                <input class="w-4 h-4 shadow-sm border
-                                    focus:outline-none focus:bg-gray-50" type="checkbox" id="is_admin" name="is_admin" value="1">
-                            </div>
-                        </div>
+                        
 
                         <div class="pr-10">
                             <div class="float-right">

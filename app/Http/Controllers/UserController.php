@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\Authenticate;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\KhcModel;
 
 class UserController extends Controller
 {
@@ -17,15 +18,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-
-        // $response = Gate::inspect('index',$permission);
-
-        
-            $users = User::all();
-            return view('admin.users.index',compact('users'));
-       
+        if(!auth()->user()->khc_model->users)
+        {
+            abort(403);
+        }
+        $users = User::all();
+        return view('admin.users.index',compact('users'));
         
     }
 
@@ -50,13 +50,24 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {   
 
-        User::create([
+       $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin' => $request->is_admin,
+            
         ]);
-        return redirect()->route('users.index');
+
+        $khcmodel = new KhcModel([
+            'users' => 0,
+            'posts' => 0,
+            'tags' => 0,
+            'ads' => 0,
+            'slider' => 0,
+        ]);
+
+        $user->khc_model()->save($khcmodel);
+
+        return redirect()->route('users.index')->with('success','User created Successfully');
     }
 
     /**
@@ -78,8 +89,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        
-
+        if($user->name === "Zabihullah Danish" && !auth()->user()->is_admin)
+        {
+            abort(403);
+        }
         return view('admin.users.edit',compact('user'));
         
     }
@@ -98,7 +111,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'is_admin' => $request->is_admin,
+                
             ]);
             return redirect()->back()->with('message','User updated');
         
@@ -113,8 +126,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        // dd('ok');
+        if($user->name === "Zabihullah Danish" && !auth()->user()->is_admin || auth()->user()->is_admin)
+        {
+            return redirect()->back()->with('warning',"Trying to delete administrator user, for help contact administrator.");
+        }
         $user->delete();
-        return redirect()->back()->with('message','User deleted');
+        return redirect()->back()->with('danger','User deleted');
     }
 }

@@ -22,15 +22,11 @@ class LoginController extends Controller
         $credentails = $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required',
-            'userType' => 'required',
+           
         ]);
 
        
-        if(Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-            'is_admin' => $request->userType,
-        ]))
+        if(Auth::attempt($credentails))
         {
             $request->session()->regenerate();
             return redirect()->intended('dashboard');

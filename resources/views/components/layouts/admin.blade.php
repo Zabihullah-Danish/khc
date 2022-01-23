@@ -10,7 +10,7 @@
 <body>
     
     {{-- Designing admin layout --}}
-    <div class="min-h-screen bg-zinc-300">
+    <div class="min-h-screen bg-zinc-300 shadow-md">
        <div class="min-h-screen max-w-7xl bg-white mx-auto ">
            
             <div class="flex flex-row p-1 shadow-md">
@@ -51,25 +51,34 @@
                     <div class=" bg-stone-900">
                         <a class="mx-5 p-3 text-white inline-block" href="{{ route('dashboard') }}">Dashboard</a>
                     </div> 
-                    {{-- @if (Auth::user()->is_admin) --}}
-                    <div class="hover:bg-stone-200">
+                    
+                    <div class="hover:bg-stone-200  @if(!Auth::user()->khc_model->users) hidden @endif">
                         <a href="{{ route('users.index') }}" class="hover:bg-stone-200 mx-5 p-3 rounded-md cursor-pointer inline-block">User Management</a>
                     </div>  
-                    {{-- @endif --}}
                     
                     
-                    <div class="hover:bg-stone-200">
+                    <div class="hover:bg-stone-200 @if(!Auth::user()->khc_model->posts) hidden @endif">
                         <a href="{{ route('posts.index') }}" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Post Management</a>
                     </div>
-                    <div class="hover:bg-stone-200">
-                        <a href="" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Tags Management</a>
+                    
+
+                    
+                    <div class="hover:bg-stone-200 @if(!Auth::user()->khc_model->tags) hidden @endif">
+                        <a href="{{ route('tags.index') }}" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Tags Management</a>
                     </div>
-                    <div class="hover:bg-stone-200">
+                    
+
+                    
+                    <div class="hover:bg-stone-200 @if(!Auth::user()->khc_model->ads) hidden @endif">
                         <a href="" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Ads Management</a>
                     </div>
-                    <div class="hover:bg-stone-200">
+                    
+
+                   
+                    <div class="hover:bg-stone-200 @if(!Auth::user()->khc_model->slider) hidden @endif">
                         <a href="" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Slider Management</a>
                     </div>
+                    
                     
                 </div>
                 <div class="w-10/12 ">
@@ -85,5 +94,7 @@
         }
     </script>
 
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

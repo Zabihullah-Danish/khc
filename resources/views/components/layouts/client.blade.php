@@ -11,8 +11,8 @@
     {{-- Navigation Bar --}}
     <div class="bg-stone-900">
         <div class="bg-stone-900 text-white">
-            <div class="container max-w-6xl mx-auto flex justify-between">
-                <div>
+            <div class="container max-w-7xl mx-auto flex justify-between">
+                <div class="">
                     <img class="inline" src="{{ asset('storage/images/laravel.png') }}" width="100" />
                     <a class="p-4 inline-block hover:bg-stone-800 rounded-md" href="{{ route('index') }}">Home</a>
                     <a class="p-4 inline-block hover:bg-stone-800 rounded-md" href="">Services</a>
@@ -26,7 +26,7 @@
         </div>
     </div>
         {{-- Slider --}}
-        <div class="container max-w-6xl border mx-auto">
+        <div class="container max-w-7xl border mx-auto">
 
 
             <div class="overflow-hidden rounded-md w-full h-96">
@@ -39,9 +39,9 @@
         </div>
 
         {{-- Content here --}}
-        <div class="container max-w-6xl border mx-auto h-auto bg-white">
+        <div class="container max-w-7xl border mx-auto bg-white">
 
-            <div class="flex flex-row justify-between">
+            <div class="flex flex-row">
 
                 <div class="w-9/12 m-1 border">
                     {{ $slot }}
@@ -63,7 +63,7 @@
 
         {{-- Footer --}}
         <div class="bg-stone-900">
-            <div class="containter max-w-6xl p-1 bg-stone-800 text-white mx-auto">
+            <div class="containter max-w-7xl p-1 bg-stone-800 text-white mx-auto">
                 <div class="grid grid-flow-col grid-cols-4 p-4 ml-10 ">
                     <div class="flex flex-col text-gray-200">
                         <h2 class="font-bold btn-primary">Services</h2>
@@ -84,6 +84,8 @@
                 </div>
             </div>
         </div>
-    
+
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

@@ -70,24 +70,6 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-row">
-                            <div class="w-2/12 p-3">
-                                <label for="is_admin">User Type</label>
-                            </div>
-                            <div class="w-10/12 pl-5 pr-10">
-                                <select id="is_admin" name="is_admin" class="w-full p-3 rounded-md shadow-sm border bg-stone-50 focus:outline-none focus:bg-gray-50">
-                                   
-                                    @if ($user->is_admin)
-                                        <option class="bg-yellow-500 text-blue-500" value="{{ $user->is_admin }}"><span>Admin</span></option>
-                                        <option value="0">Other</option>
-                                    @elseif(!$user->is_admin)
-                                        <option class="bg-yellow-500 text-blue-500" value="{{ $user->is_admin }}">Other</option>
-                                        <option value="1">Admin</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="pr-10">
                             <div class="float-right">
                                 <input class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer" type="submit" value="Update" />

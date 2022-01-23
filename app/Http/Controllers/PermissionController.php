@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    public function permission()
+    public function permissions(User $user)
     {
-        Permission::create([
-            'name' => 'edit user',
-        ]);
+        return view('admin.permissions.index',compact('user'));
     }
 }
