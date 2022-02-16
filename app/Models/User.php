@@ -54,6 +54,21 @@ class User extends Authenticatable
         return $this->hasOne(KhcModel::class);
     }
 
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class);
+    }
+
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
+
+    public function permission()
+    {
+        return $this->hasOne(Permission::class);
+    }
+
     
     
 }

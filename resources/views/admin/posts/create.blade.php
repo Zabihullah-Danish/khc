@@ -35,13 +35,16 @@
                                 
                             </div>
 
-                            <div class="flex flex-row">
+                            <div class="flex flex-row h-auto">
                                 <div class="w-2/12 pl-6 pt-3">
-                                    <label class="" for="content">Content</label>
+                                    <label class="" for="summernote">Content</label>
                                 </div>
                                 <div class="w-10/12 pl-4">
-                                    <textarea class="bg-gray-00 p-3 rounded-md border @error('content') border-red-500 @enderror w-full focus:outline-none focus:bg-gray-50"
-                                     type="text" id="content" name="content" rows="10" placeholder="Enter post details">{{ old('content') }}</textarea>
+                                    {{-- <textarea class="bg-gray-00 p-3 rounded-md border @error('content') border-red-500 @enderror 
+                                    ckeditor form-control 
+                                    w-full focus:outline-none focus:bg-gray-50"
+                                     type="text" id="summernote" name="content" rows="10" placeholder="Enter post details">{{ old('content') }}</textarea>  --}}
+                                     <x-forms.tinymce-editor />
                                     @error('content')
                                     <p class="text-red-500">{{ $message }}</p>
                                     @enderror
@@ -57,6 +60,24 @@
                                      type="text" id="tags" name="tags" placeholder="Enter tags" value="{{ old('tags') }}">
                                     <span class="text-xs bg-gray-900 text-white p-1">Separete tags by comma " , "</span>
                                     @error('tags')
+                                    <p class="text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="flex flex-row">
+                                <div class="w-2/12 pl-6 pt-3">
+                                    <label class="" for="category">Post Category</label>
+                                </div>
+                                <div class="w-10/12 pl-4">
+                                    <select class="bg-gray-00 p-3 rounded-md border @error('category') border-red-500 @enderror w-full focus:outline-none focus:bg-gray-50"
+                                     name="category" id="category">
+                                        <option disabled selected>--- Select Category ---</option>
+                                        @foreach($categories as $category)
+                                        <option class="" value="{{ $category->id }}">{{ $category->category }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category')
                                     <p class="text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div>

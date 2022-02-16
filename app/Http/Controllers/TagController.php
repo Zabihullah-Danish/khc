@@ -26,6 +26,10 @@ class TagController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->permission->create_tag)
+        {
+            abort(403);
+        }
         $tags = Tag::paginate(12);
         return view('admin.tags.create',compact('tags'));
     }
@@ -61,6 +65,10 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
+        if(!auth()->user()->permission->edit_tag)
+        {
+            abort(403);
+        }
        
         $tags = Tag::paginate(12);
         return view('admin.tags.edit',compact('tag','tags'));
@@ -90,6 +98,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        if(!auth()->user()->permission->delete_tag)
+        {
+            abort(403);
+        }
        
         $tag->delete();
         return redirect()->back()->with('danger','Tage deleted successfull');

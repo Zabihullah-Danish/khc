@@ -1,4 +1,9 @@
 <x-layouts.auth_card>
+
+    <x-slot name="title">
+        Login
+    </x-slot>
+
     <div class="p-1 mx-auto">
         <a href="{{ route('index') }}">
         <img class="mx-auto rounded-md" src="{{ asset('storage/images/laravel.png') }}" width="100" height="100" />
@@ -8,7 +13,7 @@
         @error('loginError')
             <p class="p-2 text-red-500">{{ $message }}</p>
         @enderror
-        
+        <x-message />
         <form action="{{ route('authenticate') }}" method="POST">
             @csrf
             <div class="flex flex-col mx-auto p-2 space-y-5">
@@ -20,14 +25,7 @@
                 @error('password')
                 <p class="text-red-500 pl-2">{{ $message }}</p>
                 @enderror
-                <select class="p-3 border @error('userRole') border-red-500 @enderror rounded-xl bg-stone-50 focus:bg-stone-100  focus:outline-none" name="userRole" class="">
-                    <option disabled selected>--- User Role ---</option>
-                    <option value="1">Admin</option>
-                    <option value="0">Other</option>
-                </select>
-                @error('userRole')
-                    <p class="text-red-500">{{ $message }}</p>
-                @enderror
+                
                 <div class="pl-2">
                     <label class="" for="remember_me">Remember me</label>
                     <input class="" type="checkbox" name="remember_me" id="remember_me" />
@@ -38,6 +36,7 @@
                     hover:text-green-500 hover:font-bold
                     transition-all duration-500 cursor-pointer"
                     type="submit" name="submit" value="Login" />
+                <a class="text-blue-500 hover:text-blue-600" href="">Forgot password</a>
             </div>
             
         </form>

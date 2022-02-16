@@ -27,7 +27,8 @@ class UpdatePostRequest extends FormRequest
             'title' => 'required|max:1000',
             'content' => 'required',
             'tags' => 'required',
-            'image' => 'required|image',
+            'category' => 'required',
+            'image' => 'image',
         ];
         
     }

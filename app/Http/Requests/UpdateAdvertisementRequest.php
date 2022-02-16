@@ -13,7 +13,7 @@ class UpdateAdvertisementRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateAdvertisementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:300',
+            // 'photo' => 'required|image|dimensions:min_width=320,min_height=384',
+            'expire_at' => 'required|date|after:tomorrow',
         ];
     }
 }

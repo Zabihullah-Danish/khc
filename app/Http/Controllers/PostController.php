@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
@@ -28,8 +29,10 @@ class PostController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $posts = Post::where( 'user_id',$user_id)->get();
-        return view('admin.posts.index',compact('posts'));    
+        $posts = Post::where('user_id',$user_id)->get();
+        $categories = Category::all();
+        // dd($posts);
+        return view('admin.posts.index',compact('posts','categories'));    
     }
 
     /**
@@ -39,8 +42,14 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
+        if(!auth()->user()->permission->create_post)
+        {
+            abort(403);
+        }
+
+        $categories = Category::all();
        
-        return view('admin.posts.create');
+        return view('admin.posts.create',compact('categories'));
     }
 
     /**
@@ -51,7 +60,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        
+        // dd($request->all());
         $tags = explode(',',$request->tags);
 
         if($request->has('image'))
@@ -64,6 +73,7 @@ class PostController extends Controller
         $user_id = Auth::user()->id;
         $post = Post::create([
             'user_id' => Auth::user()->id,
+            'category_id' => $request->category,
             'title' => $request->title,
             'content' => $request->content,
             'image' => $filename,
@@ -71,9 +81,9 @@ class PostController extends Controller
 
         foreach($tags as $tagName)
         {
-            $tag = Tag::firstOrCreate(['tag' => $tagName]);
-            $post->tags()->attach($tag);
+            $post->tags()->save($tagName);
         }
+
 
         return redirect()->route('posts.index')->with('success','Post added successfully');
     }
@@ -86,9 +96,14 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        if(!Gate::authorize('view',$post))
+        if(!auth()->user()->permission->view_post)
         {
             abort(403);
+        }
+
+        if(!Gate::allows('view',$post))
+        {
+            abort(404);
         }
         return view('admin.posts.view',compact('post'));
     }
@@ -101,9 +116,19 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(!auth()->user()->permission->edit_post)
+        {
+            abort(403);
+        }
         
+        // dd(Gate::allows('edit',$post));
+        if(!Gate::allows('view',$post))
+        {
+          abort(404);  
+        }
+        $categories = Category::all();
         $tags = $post->tags->implode('tag', ',');
-        return view('admin.posts.edit',compact('post','tags'));
+        return view('admin.posts.edit',compact('post','tags','categories'));
     }
 
     /**
@@ -124,11 +149,11 @@ class PostController extends Controller
             $filename = time() . "-" . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('uploads', $filename,'public');
         }
-
         $post->update([
+            'category_id' => $request->category,
             'title' => $request->title,
             'content' => $request->content,
-            'image' => $filename,
+            'image' => $filename ?? $post->image,
         ]);
 
         $newTags = [];
@@ -152,7 +177,40 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(!auth()->user()->permission->delete_post)
+        {
+            abort(403);
+        }
+
         $post->delete();
+        Storage::delete('public/uploads/' . $post->image);
         return redirect()->route('posts.index')->with('danger','Post deleted successfully');
+    }
+
+    public function trashedPosts()
+    {
+        if(!auth()->user()->is_admin)
+        {
+            abort(403);
+        }
+        $trashedPosts = Post::onlyTrashed()->get();
+        // dd($trashedPosts);
+        return view('admin.posts.trashedPosts',compact('trashedPosts'));
+    }
+
+    public function restorePost($post)
+    {
+        // dd($post);
+        $findPost = Post::onlyTrashed()->find($post);
+        $findPost->restore();
+        return redirect()->back()->with('success','Post restored successfully');
+
+    }
+
+    public function deletePost($post)
+    {
+        $findPost = Post::onlyTrashed()->find($post);
+        $findPost->forceDelete();
+        return redirect()->back()->with('danger','Post deleted successfully');
     }
 }

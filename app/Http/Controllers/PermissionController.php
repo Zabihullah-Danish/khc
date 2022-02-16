@@ -8,8 +8,8 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    public function permissions(User $user)
+    public function modelsPermission()
     {
-        return view('admin.permissions.index',compact('user'));
+        return view('admin.permissions.index');
     }
 }

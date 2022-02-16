@@ -15,11 +15,11 @@ class KhcModelFactory extends Factory
     {
         return [
             'user_id' => 1,
-            'users' => 0,
-            'posts' => 0,
-            'tags' => 0,
-            'ads' => 0,
-            'slider' => 0
+            'users' => 1,
+            'posts' => 1,
+            'tags' => 1,
+            'ads' => 1,
+            'slider' => 1
         ];
     }
 }

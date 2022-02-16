@@ -13,7 +13,7 @@ class StoreAdvertisementRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreAdvertisementRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:300',
+            'photo' => 'required|image|dimensions:max_width=310,max_height=500',
+            'expire_at' => 'required|date|after:tomorrow',
         ];
     }
 }

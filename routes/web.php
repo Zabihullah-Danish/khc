@@ -1,16 +1,18 @@
 <?php
 
+use App\Models\Advertisement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SliderPictures;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\KhcModelController;
-use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,24 +28,51 @@ use App\Http\Controllers\PermissionController;
 // protected routes
 Route::middleware('auth')->group(function(){
 
-    Route::get('/dashboard',[AdminController::class,'dashboard'])->name('dashboard');
+    //admin routes
+    Route::middleware('admin')->group(function(){
+
+        
+        
+        //Models Permissions Routes
+        Route::post('/admin/user/type/{user}',[KhcModelController::class,'userLevelUpdate'])->name('userLevel');
+        Route::post('/admin/user/permissions/{user}',[KhcModelController::class,'updateModelsPermission'])->name('updateModelsPermission');
+        Route::post('admin/user/status/{user}',[KhcModelController::class,'userStatus'])->name('userStatus');
+
+        //Models Access Routes
+        Route::get('/admin/view/models/{user}',[KhcModelController::class,'index'])->name('permissions.index');
+        Route::get('/admin/create/models/{user}',[KhcModelController::class,'createKhcModel'])->name('createKhcModel');
+        Route::post('/admin/store/models/{user}',[KhcModelController::class,'storeKhcModel'])->name('storeKhcModel');
+        Route::get('/admin/edit/models/{model}',[KhcModelController::class,'editKhcModel'])->name('editKhcModel');
+        Route::post('/admin/update/models/{model}',[KhcModelController::class,'updateKhcModel'])->name('updateKhcModel');
+
+        //Trashed posts routes
+        Route::get('/posts/trashed',[PostController::class,'trashedPosts'])->name('posts.trashed');
+        Route::get('/posts/restore/{post}',[PostController::class,'restorePost'])->name('posts.restore');
+        Route::get('/posts/delete/{post}',[PostController::class,'deletePost'])->name('posts.delete');
+
+        //categories routes
+        Route::get('/categories',[CategoryController::class,'index'])->name('category.index');
+        Route::post('/categories/store',[CategoryController::class,'store'])->name('category.store');
+        Route::get('/categories/{category}/edit',[CategoryController::class,'edit'])->name('category.edit');
+        Route::post('categories/update/{category}',[CategoryController::class,'update'])->name('category.update');
+        Route::delete('/categoryies/{category}',[CategoryController::class,'destroy'])->name('category.destroy');
+    });
+
+    Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
     Route::get('/logout',[LoginController::class,'logout'])->name('logout');
     Route::resource('users', UserController::class);
     Route::resource('posts', PostController::class);
     Route::resource('tags',TagController::class);
-
-    //admin routes
-    Route::get('/admin/view/models/{user}',[KhcModelController::class,'index'])->name('permissions.index')->middleware('admin');
-    Route::get('/admin/create/models/{user}',[KhcModelController::class,'createKhcModel'])->name('createKhcModel');
-    Route::post('/admin/store/models/{user}',[KhcModelController::class,'storeKhcModel'])->name('storeKhcModel');
-    Route::get('/admin/edit/models/{model}',[KhcModelController::class,'editKhcModel'])->name('editKhcModel');
-    Route::post('/admin/update/model/{model}',[KhcModelController::class,'updateKhcModel'])->name('updateKhcModel');
+    Route::resource('ads',AdvertisementController::class);
+    Route::resource('slider',SliderController::class);
+    
    
 
     
 });
 
 Route::get('/', [HomeController::class,'index'])->name('index');
-Route::get('/login', [LoginController::class,'loginPage'])->name('login');
+Route::get('/post/{post}/details',[HomeController::class,'viewPostDetails'])->name('viewPostDetails');
+Route::get('/login', [LoginController::class,'loginPage'])->name('login')->middleware('throttle:login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('authenticate');
 

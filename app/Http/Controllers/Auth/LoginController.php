@@ -28,8 +28,13 @@ class LoginController extends Controller
        
         if(Auth::attempt($credentails))
         {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            if(!Auth::user()->blocked)
+            {
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            }
+            
+            return back()->with('warning',"Your user blocked contact administrator for help.");
             
         }
 
@@ -46,6 +51,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

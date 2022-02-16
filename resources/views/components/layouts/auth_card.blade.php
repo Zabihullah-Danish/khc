@@ -10,7 +10,7 @@
 <body>
     
     {{-- Authenticate --}}
-    <div class="container max-w-xl border mx-auto mt-28 rounded-md shadow-lg p-10">
+    <div class="container max-w-xl border mx-auto mt-28 rounded-md shadow-xl shadow-gray-300 p-10">
         {{ $slot }}
     </div>
 

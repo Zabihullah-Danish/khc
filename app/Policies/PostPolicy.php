@@ -10,94 +10,9 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
 {
-    use HandlesAuthorization;
-
-    public function before(User $user,$ability)
-    {
-        if($user->is_admin)
-        {
-            return true;
-        }
-    }
-
-    public function viewPostModel(User $user)
-    {
-        return $user->khc_model->posts === 1;
-        //  ? Response::allow() : Response::deny(" you're not allowed this section");
-    }
-    public function PostModel(User $user)
-    {
-        return $user->khc_model->posts === 1 ? Response::allow() : Response::deny(" you're not allowed this section");
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
     public function view(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        return $user->id == $post->user_id;
     }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
-    {
-        
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function update(User $user, Post $post)
-    {
-        return $user->id === $post->user_id && route('posts.edit') === true;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Post $post)
-    {
-        //
-    }
+ 
 }

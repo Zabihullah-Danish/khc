@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\KhcModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\Authenticate;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\KhcModel;
 
 class UserController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +38,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        
+        if(!auth()->user()->permission->create_user)
+        {
+            abort(403);
+        }
         
         return view('admin.users.create');
     }
@@ -64,8 +69,33 @@ class UserController extends Controller
             'ads' => 0,
             'slider' => 0,
         ]);
-
         $user->khc_model()->save($khcmodel);
+        $user->permission()->create([
+            //user
+            'create_user' => 0,
+            'view_user' => 0,
+            'edit_user' => 0,
+            'delete_user' => 0,
+            //post
+            'create_post' => 0,
+            'view_post' => 0,
+            'edit_post' => 0,
+            'delete_post' => 0,
+            //tag
+            'create_tag' => 0,
+            'edit_tag' => 0,
+            'delete_tag' => 0,
+            //ads
+            'create_ads' => 0,
+            'view_ads' => 0,
+            'edit_ads' => 0,
+            'delete_ads' => 0,
+            //slider
+            'create_slider' => 0,
+            'view_slider' => 0,
+            'edit_slider' => 0,
+            'delete_slider' => 0,
+        ]);
 
         return redirect()->route('users.index')->with('success','User created Successfully');
     }
@@ -89,9 +119,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if($user->name === "Zabihullah Danish" && !auth()->user()->is_admin)
+        if(!auth()->user()->permission->view_user)
         {
             abort(403);
+        }
+        if($user->name == "Mohammad Mahdi Hedayat" && auth()->user()->name != "Mohammad Mahdi Hedayat")
+        {
+            return redirect()->back()->with('warning',"Trying to edit super admin user, contact administrator for help!");
         }
         return view('admin.users.edit',compact('user'));
         
@@ -126,7 +160,16 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->name === "Zabihullah Danish" && !auth()->user()->is_admin || auth()->user()->is_admin)
+        if(!auth()->user()->permission->delete_user)
+        {
+            abort(403);
+        }
+
+        if($user->name == "Mohammad Mahdi Hedayat" && auth()->user()->name != "Mohammad Mahdi Hedayat")
+        {
+            return redirect()->back()->with('warning',"Trying to delete administrator user, for help contact administrator.");
+        }
+        elseif($user->name == "Mohammad Mahdi Hedayat" && auth()->user()->name == "Mohammad Mahdi Hedayat")
         {
             return redirect()->back()->with('warning',"Trying to delete administrator user, for help contact administrator.");
         }

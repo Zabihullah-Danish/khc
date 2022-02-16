@@ -15,8 +15,12 @@ class CreateAdvertisementsTable extends Migration
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('title',1000);
             $table->string('ads_photo');
+            $table->string('website_link')->nullable();
             $table->timestamps();
+            $table->date('expire_at');
         });
     }
 

@@ -8,7 +8,8 @@
 
             <div class="flex flex-row justify-between p-2 border mb-1 shadow-sm rounded-md">
                 <h1 class="text-2xl">List of Tags attached with all Posts</h1>
-                <a class="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md inline-block float-right" href="{{ route('tags.create') }}">Create New</a>
+                <a class="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md inline-block float-right
+                @if(!Auth::user()->permission->create_tag) invisible @endif" href="{{ route('tags.create') }}">Create New</a>
             </div>
 
             <x-message />
@@ -22,12 +23,14 @@
                         <div class="flex flex-row justify-between border-b hover:bg-sky-50 even:bg-gray-100 odd:bg-gray-50 rounded-md">
                             <p class="p-3">{{ $tag->tag }}</p>
                             <div class="p-2 pt-2 text-xs flex">
-                                <a class="p-2 bg-blue-500 hover:bg-white border hover:border-blue-500 hover:text-blue-500 rounded text-white transition-all"
+                                <a class="p-2 bg-blue-500 hover:bg-white border hover:border-blue-500 hover:text-blue-500 rounded text-white transition-all
+                                @if(!Auth::user()->permission->edit_tag) invisible @endif"
                                  href="{{ route('tags.edit',$tag) }}">Edit</a>
                                  <form action="{{ route('tags.destroy',$tag) }}" onsubmit="return confirm('Are you sure to delete this Tag?')" method="POST">
                                     @csrf
                                     @method('delete')
                                 <button class="p-2 bg-red-500 hover:bg-white border hover:border-red-500
+                                @if(!Auth::user()->permission->delete_tag) invisible @endif
                                  hover:text-red-500 rounded text-white transition-all inline" type="submit">Delete</button>
                                  </form>
                             </div>
