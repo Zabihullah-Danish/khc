@@ -17,18 +17,22 @@
         <form action="{{ route('authenticate') }}" method="POST">
             @csrf
             <div class="flex flex-col mx-auto p-2 space-y-5">
-                <input class="p-3 border rounded-xl focus:bg-stone-100  focus:outline-none" type="email" name="email" placeholder="Enter email" value="{{ old('email') }}" />
+                <input class="p-3 border rounded-xl focus:bg-stone-100  focus:outline-none @error('email') border-red-500 @enderror" type="email" name="email" placeholder="Enter email" value="{{ old('email') }}" />
                 @error('email')
                 <p class="text-red-500 pl-2">{{ $message }}</p>
                 @enderror
-                <input class="p-3 border rounded-xl focus:bg-stone-100  focus:outline-none" type="password" name="password" placeholder="Enter password" />
+                <input class="p-3 border rounded-xl focus:bg-stone-100  focus:outline-none @error('password') border-red-500 @enderror" type="password" name="password" placeholder="Enter password" />
                 @error('password')
                 <p class="text-red-500 pl-2">{{ $message }}</p>
                 @enderror
                 
-                <div class="pl-2">
-                    <label class="" for="remember_me">Remember me</label>
-                    <input class="" type="checkbox" name="remember_me" id="remember_me" />
+                <div class="p-2 flex flex-row justify-between">
+                    <div>
+                        <input class="" type="checkbox" name="remember_me" id="remember_me" />
+                        <label class="" for="remember_me">Remember me</label>
+                    </div>
+                    
+                    <a class="text-blue-500 hover:text-blue-600 hover:underline" href="">Forgot password</a>
                 </div>
                 
                 <input class="bg-stone-900 text-white p-3 
@@ -36,7 +40,7 @@
                     hover:text-green-500 hover:font-bold
                     transition-all duration-500 cursor-pointer"
                     type="submit" name="submit" value="Login" />
-                <a class="text-blue-500 hover:text-blue-600" href="">Forgot password</a>
+                
             </div>
             
         </form>

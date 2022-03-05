@@ -44,7 +44,7 @@
                                     ckeditor form-control 
                                     w-full focus:outline-none focus:bg-gray-50"
                                      type="text" id="summernote" name="content" rows="10" placeholder="Enter post details">{{ old('content') }}</textarea>  --}}
-                                     <x-forms.tinymce-editor />
+                                     <x-forms.tinymce-editor>{{ old('content') }}</x-forms.tinymce-editor>
                                     @error('content')
                                     <p class="text-red-500">{{ $message }}</p>
                                     @enderror
@@ -71,10 +71,11 @@
                                 </div>
                                 <div class="w-10/12 pl-4">
                                     <select class="bg-gray-00 p-3 rounded-md border @error('category') border-red-500 @enderror w-full focus:outline-none focus:bg-gray-50"
-                                     name="category" id="category">
+                                     name="category" id="category" value="{{ old('category') }}">
                                         <option disabled selected>--- Select Category ---</option>
                                         @foreach($categories as $category)
-                                        <option class="" value="{{ $category->id }}">{{ $category->category }}</option>
+
+                                        <option class="@if(!Auth::user()->is_admin && $category->category == "about") hidden @endif" value="{{ $category->id }}">{{ $category->category }}</option>
                                         @endforeach
                                     </select>
                                     @error('category')

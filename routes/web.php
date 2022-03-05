@@ -8,11 +8,12 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SliderPictures;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\KhcModelController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdvertisementController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VeiwPostCountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,11 @@ Route::middleware('auth')->group(function(){
 
 Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('/post/{post}/details',[HomeController::class,'viewPostDetails'])->name('viewPostDetails');
+Route::get('/services/{category:category}',[HomeController::class,'viewPostsByCategory'])->name('viewPostsByCategory');
+Route::get('/about/khc/',[HomeController::class,'about'])->name('about');
+
+
+//Authentication routes
 Route::get('/login', [LoginController::class,'loginPage'])->name('login')->middleware('throttle:login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('authenticate');
 

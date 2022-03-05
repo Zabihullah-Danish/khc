@@ -8,7 +8,10 @@
 
             <div class="flex flex-row justify-between p-2 border mb-1 shadow-sm rounded-md">
                 <h1 class="text-2xl">{{ $slider->title }}</h1>
-                <a onclick="goBack()" class="p-3 bg-orange-500 hover:bg-orange-600 text-white rounded-md inline-block float-right cursor-pointer" >Back</a>
+                <div>
+                    <a onclick="goBack()" class="p-3 bg-orange-500 hover:bg-orange-600 text-white rounded-md inline-block float-right cursor-pointer" >Back</a>
+                </div>
+                
             </div>
 
             <div class="rounded-md border">

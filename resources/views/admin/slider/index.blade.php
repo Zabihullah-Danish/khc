@@ -42,19 +42,22 @@
                                 {{ $slider->image }}
                             </a>
                         </div>
-                        <div class="flex flex-row pr-2 text-xs py-3 w-1/6">
-                            <a class="p-2 bg-gray-500 hover:bg-white border hover:border-gray-500 hover:text-gray-500 text-white rounded 
-                            @if(!Auth::user()->permission->view_slider) hidden @endif"
-                             href="{{ route('slider.show', $slider) }}">View</a>
-                            <a class="p-2 bg-blue-500 hover:bg-white border hover:border-blue-500 hover:text-blue-500 text-white rounded 
-                            @if(!Auth::user()->permission->edit_slider) hidden @endif"
-                             href="{{ route('slider.edit', $slider) }}">Edit</a>
-                            <form action="{{ route('slider.destroy', $slider) }}" method="POST" onsubmit="return confirm('Are sure to delete the slider?')">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="p-2 bg-red-500 hover:bg-white border hover:border-red-500 hover:text-red-500 text-white rounded
-                                @if(!Auth::user()->permission->delete_slider) hidden @endif">Delete</button>
-                            </form>
+                        <div class=" w-1/6">
+                            <div class="flex flex-row pr-2 text-xs py-3">
+                                <a class="p-2 bg-gray-500 hover:bg-white border hover:border-gray-500 hover:text-gray-500 text-white rounded 
+                                @if(!Auth::user()->permission->view_slider) hidden @endif"
+                                 href="{{ route('slider.show', $slider) }}">View</a>
+                                <a class="p-2 bg-blue-500 hover:bg-white border hover:border-blue-500 hover:text-blue-500 text-white rounded 
+                                @if(!Auth::user()->permission->edit_slider) hidden @endif"
+                                 href="{{ route('slider.edit', $slider) }}">Edit</a>
+                                <form action="{{ route('slider.destroy', $slider) }}" method="POST" onsubmit="return confirm('Are sure to delete the slider?')">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="p-2 bg-red-500 hover:bg-white border hover:border-red-500 hover:text-red-500 text-white rounded
+                                    @if(!Auth::user()->permission->delete_slider) hidden @endif">Delete</button>
+                                </form>
+                            </div>
+                            
                         </div>
                     </div>
                     @empty

@@ -47,7 +47,7 @@
                         @endauth
                         </div>
                         <div class="p-4">
-                            <a class="p-2 bg-stone-400 rounded-md" href="{{ route('logout') }}">Logout</a>
+                            <a class="p-2 bg-stone-100 rounded-md" href="{{ route('index') }}">Home Page</a>
                         </div>
                            
                     </div>
@@ -86,6 +86,14 @@
                        
                         <div class="hover:bg-stone-200 @if(!Auth::user()->khc_model->slider) hidden @endif">
                             <a href="{{ route('slider.index') }}" class=" mx-5 p-3 rounded-md cursor-pointer inline-block">Slider Management</a>
+                        </div>
+                        <div class="mx-5 p-3 py-28">
+                            <div class="mt-20">
+                                <a class=" text-red-500" href="{{ route('logout') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 inline" class="ionicon" viewBox="0 0 512 512"><title>Log Out</title><path d="M304 336v40a40 40 0 01-40 40H104a40 40 0 01-40-40V136a40 40 0 0140-40h152c22.09 0 48 17.91 48 40v40M368 336l80-80-80-80M176 256h256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+                                    <span class="text-xs font-mono">Logout</span>
+                                </a>
+                            </div>
                         </div>
                         
                     </div>

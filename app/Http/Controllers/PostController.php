@@ -62,13 +62,15 @@ class PostController extends Controller
     {
         // dd($request->all());
         $tags = explode(',',$request->tags);
-
+        // dd($tags);
         if($request->has('image'))
         {
             $filename = time() . "-" . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs('uploads', $filename,'public');
 
         }
+
+        // dd($request->content);
 
         $user_id = Auth::user()->id;
         $post = Post::create([
@@ -81,7 +83,9 @@ class PostController extends Controller
 
         foreach($tags as $tagName)
         {
-            $post->tags()->save($tagName);
+            $post->tags()->create([
+                'tag' => $tagName,
+            ]);
         }
 
 
@@ -128,6 +132,7 @@ class PostController extends Controller
         }
         $categories = Category::all();
         $tags = $post->tags->implode('tag', ',');
+        // dd($tags);
         return view('admin.posts.edit',compact('post','tags','categories'));
     }
 
@@ -142,7 +147,7 @@ class PostController extends Controller
     {
         
         $tags = explode(",", $request->tags);
-
+        // dd($tags);
         if($request->has('image'))
         {
             Storage::delete('public/uploads/' . $post->image);
@@ -156,15 +161,20 @@ class PostController extends Controller
             'image' => $filename ?? $post->image,
         ]);
 
-        $newTags = [];
+        if($post->tags())
+            {
+                $post->tags()->delete();
+            }
 
         foreach($tags as $tagName)
         {
-            $tag = Tag::firstOrCreate(['tag' => $tagName]);
-            array_push($newTags, $tag->id);
+            
+            $post->tags()->updateOrCreate([
+                'tag' => $tagName,
+            ]);
         }
 
-        $post->tags()->sync($newTags);
+        // $post->tags()->sync($newTags);
 
         return redirect()->back()->with('success','Post Updated Successfully');
     }

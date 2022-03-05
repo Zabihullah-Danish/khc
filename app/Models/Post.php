@@ -33,4 +33,9 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function views()
+    {
+        return $this->hasMany(View::class);
+    }
 }
