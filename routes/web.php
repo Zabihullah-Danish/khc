@@ -82,3 +82,6 @@ Route::get('/about/khc/',[HomeController::class,'about'])->name('about');
 Route::get('/login', [LoginController::class,'loginPage'])->name('login')->middleware('throttle:login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('authenticate');
 
+//forget password routes.
+
+
