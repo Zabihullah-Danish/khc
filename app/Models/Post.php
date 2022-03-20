@@ -14,6 +14,11 @@ class Post extends Model
         'user_id','category_id','title', 'content','image'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'title';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

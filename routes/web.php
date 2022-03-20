@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Advertisement;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
@@ -74,13 +75,14 @@ Route::middleware('auth')->group(function(){
 
 Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('/post/{post}/details',[HomeController::class,'viewPostDetails'])->name('viewPostDetails');
-Route::get('/services/{category:category}',[HomeController::class,'viewPostsByCategory'])->name('viewPostsByCategory');
+Route::get('/services/{category}',[HomeController::class,'viewPostsByCategory'])->name('viewPostsByCategory');
 Route::get('/about/khc/',[HomeController::class,'about'])->name('about');
 
 
 //Authentication routes
 Route::get('/login', [LoginController::class,'loginPage'])->name('login')->middleware('throttle:login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('authenticate');
+
 
 //forget password routes.
 

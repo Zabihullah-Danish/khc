@@ -20,10 +20,10 @@
                         <img class="inline" src="{{ asset('storage/images/laravel.png') }}" width="90" />
                     </div>
                     <div>
-                        <a class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md" href="{{ route('index') }}">Home</a>
+                        <a class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md font-serif" href="{{ route('index') }}">Home</a>
                     </div>
                     <div>
-                        <button onmouseover="dropdownOpen()" class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md" >Services
+                        <button onmouseover="dropdownOpen()" class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md font-sans" >Services
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline" class="ionicon" viewBox="0 0 512 512"><title>Chevron Down</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 184l144 144 144-144"/></svg>
                         </button>
                         <div style="display: none;" id="dropdown" onmouseover="dropdownOpen()"   class="absolute z-10 hidden">
@@ -122,7 +122,7 @@
                     <div class="">
                         <h1 class="font-bold text-gray-500 pb-3">Contact</h1> 
                         <div class="text-gray-400 font-mono">
-                            <p class="hover:text-sky-500 cursor-pointer"><span class=" text-xl">&#9993; </span>@khc.af</p>
+                            <p class="hover:text-sky-500 cursor-pointer"><span class=" text-xl">&#9993; </span>info@khc.af</p>
                             <p class="hover:text-sky-500 cursor-pointer"><span class=" text-xl">&#9990; </span>+93799624470</p>
                         </div> 
                     </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="{{ url('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     {{-- links --}}
     {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
     
     {{-- Designing admin layout --}}
     <div class="min-h-screen bg-zinc-300 shadow-md">
-       <div class="min-h-screen max-w-7xl bg-white mx-auto ">
+       <div class="min-h-screen w-full bg-white mx-auto ">
            
             <div class="flex flex-row p-1 shadow-md">
 

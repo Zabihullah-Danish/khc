@@ -36,7 +36,10 @@ class HomeController extends Controller
 
     public function viewPostsByCategory(Category $category)
     {
-        // dd($category->posts);
+        if($category->category == "about")
+        {
+            abort(404);
+        }
         $posts = Post::where('category_id', $category->id)->get();
         $categories = Category::all();
         $ads = Advertisement::all();
