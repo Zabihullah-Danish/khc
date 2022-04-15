@@ -14,11 +14,23 @@ class HomeController extends Controller
     //** this function shows home page */
     public function index()
     {
-        $posts = Post::paginate(10);
+        
+        $posts = Post::with(['views','category'])->latest();
+        if(request('search'))
+        {
+            $posts
+                ->where('title','like', '%' . request('search') . '%')
+                ->orWhere('content','like', '%' . request('search') . '%');
+        }
         $ads = Advertisement::all();
         $sliders = Slider::all();
         $categories = Category::all();
-        return view('home.index',compact('posts','ads','sliders','categories'));
+        return view('home.index',[
+            'posts' => $posts->get(),
+            'ads' => $ads,
+            'categories' => $categories,
+            'sliders' => $sliders,
+        ]);
     }
 
     public function viewPostDetails(Post $post)
@@ -55,5 +67,10 @@ class HomeController extends Controller
         // $about = Post::where('')
         // dd('about page');
         return view('home.about', compact('ads','sliders','categories'));
+    }
+
+    public function search(Request $request)
+    {
+        return redirect()->back();
     }
 }

@@ -17,8 +17,8 @@ class LoginController extends Controller
     }
 
     public function authenticate(Request $request)
-    {
-
+    {   
+        
         $credentails = $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required',
@@ -31,7 +31,7 @@ class LoginController extends Controller
             if(!Auth::user()->blocked)
             {
                 $request->session()->regenerate();
-                return redirect()->intended('dashboard');
+                return redirect()->route('dashboard');
             }
             
             return back()->with('warning',"Your user blocked contact administrator for help.");

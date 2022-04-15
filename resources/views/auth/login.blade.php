@@ -6,7 +6,7 @@
 
     <div class="p-1 mx-auto">
         <a href="{{ route('index') }}">
-        <img class="mx-auto rounded-md" src="{{ asset('storage/images/laravel.png') }}" width="100" height="100" />
+        <img class="mx-auto rounded-md" src="{{ asset('storage/images/logo.jpg') }}" width="100" height="100" />
         </a>
     </div>
     <div class="p-1">

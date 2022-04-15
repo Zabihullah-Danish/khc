@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             KhcModelSeeder::class,
             PermissionSeeder::class,
-            PostSeeder::class,
+            // PostSeeder::class,
         ]);
     }
 }

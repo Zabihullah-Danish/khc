@@ -15,6 +15,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\VeiwPostCountController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +30,11 @@ use App\Http\Controllers\VeiwPostCountController;
 */
 
 // protected routes
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->prefix('admin')->group(function(){
 
     //admin routes
     Route::middleware('admin')->group(function(){
 
-        
         
         //Models Permissions Routes
         Route::post('/admin/user/type/{user}',[KhcModelController::class,'userLevelUpdate'])->name('userLevel');
@@ -62,14 +63,13 @@ Route::middleware('auth')->group(function(){
 
     Route::get('/dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
     Route::get('/logout',[LoginController::class,'logout'])->name('logout');
-    Route::resource('users', UserController::class);
-    Route::resource('posts', PostController::class);
-    Route::resource('tags',TagController::class);
-    Route::resource('ads',AdvertisementController::class);
-    Route::resource('slider',SliderController::class);
-    
-   
-
+    Route::resources([
+        'users' => UserController::class,
+        'posts' => POstController::class,
+        'tags'   => TagController::class,
+        'ads'   => AdvertisementController::class,
+        'slider'=> SliderController::class,
+    ]);
     
 });
 
@@ -83,7 +83,17 @@ Route::get('/about/khc/',[HomeController::class,'about'])->name('about');
 Route::get('/login', [LoginController::class,'loginPage'])->name('login')->middleware('throttle:login');
 Route::post('/login', [LoginController::class,'authenticate'])->name('authenticate');
 
+//search content routes
+// Route::get('/search',[HOmeController::class,'search'])->name('search');
 
-//forget password routes.
+//test route
+Route::get('/test/users/photo',function(Request $request){
+    if($request->is('test/*')){
+        return "cookie";
+    }
+})->name('test');
 
-
+//fall back route
+Route::fallback(function(){
+    return redirect()->back()->with('warning','Unknown Data');
+});

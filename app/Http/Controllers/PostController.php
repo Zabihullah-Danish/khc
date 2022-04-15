@@ -29,7 +29,7 @@ class PostController extends Controller
         }
 
         $user_id = Auth::user()->id;
-        $posts = Post::where('user_id',$user_id)->get();
+        $posts = Post::latest()->where('user_id',$user_id)->get();
         $categories = Category::all();
         // dd($posts);
         return view('admin.posts.index',compact('posts','categories'));    

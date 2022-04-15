@@ -14,43 +14,47 @@
     {{-- Navigation Bar --}}
     <div class="bg-white">
         <div class="bg-white text-gray-700 shadow">
-            <div class="container max-w-7xl mx-auto flex justify-between">
-                <div class="flex p-2">
+            <div class="container max-w-7xl mx-auto flex justify-between bg-white">
+                <div class="flex space-x-2">
                     <div>
-                        <img class="inline" src="{{ asset('storage/images/laravel.png') }}" width="90" />
+                        <a href="{{ route('index') }}">
+                            <img class="inline" src="{{ asset('storage/images/logo.jpg') }}" width="90" />
+                        </a>
+                        
                     </div>
-                    <div>
-                        <a class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md font-serif" href="{{ route('index') }}">Home</a>
-                    </div>
-                    <div>
-                        <button onmouseover="dropdownOpen()" class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md font-sans" >Services
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline" class="ionicon" viewBox="0 0 512 512"><title>Chevron Down</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 184l144 144 144-144"/></svg>
-                        </button>
-                        <div style="display: none;" id="dropdown" onmouseover="dropdownOpen()"   class="absolute z-10 hidden">
-                            <ul class=" bg-gray-50 text-gray-600 shadow rounded">
-                                {{ $categoryList }}
-                            </ul>
+                    <div class="flex pt-5">
+                        <div>
+                            <a class="p-4 inline-block hover:bg-gray-100 hover:text-sky-500 rounded-md font-sans" href="{{ route('index') }}">Home</a>
                         </div>
-                    </div>
-                    <div>
-                        <a class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md" href="">Contact</a>
-                    </div>
-                    <div>
-                        <a class="p-4 inline-block hover:bg-stone-100 hover:text-sky-500 rounded-md" href="{{ route('about') }}">About</a>
-                    </div>
-                    {{-- <div class="p-1 pl-6 relative">
-                        <input onclick="search()" class="p-2 pl-3 border border-gray-100 rounded-full w-96 -mr-14 focus:outline-none shadow " type="search" name="search" placeholder="Search content">
-                        <input class="-ml-3 p-1 text-xs bg-gray-700 text-gray-400 rounded-full" type="submit" value="Search" name="submit">
-                        <div id="searchArea" class="absolute border z-10 hidden mt-5 bg-white transition-all duration-300 delay-500 left-0">
-                            <div class="w-full left-0 relative  transition-all duration-300 delay-500">
-                                <p>Search Content here</p>
+                        <div>
+                            <button onmouseover="dropdownOpen()" class="p-4 inline-block hover:bg-gray-100 hover:text-sky-500  rounded-md font-sans" >Services
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 inline" class="ionicon" viewBox="0 0 512 512"><title>Services</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 184l144 144 144-144"/></svg>
+                            </button>
+                            <div style="display: none;" id="dropdown" onmouseover="dropdownOpen()"   class="absolute z-10 hidden">
+                                <ul class=" bg-white overflow-hidden shadow rounded">
+                                    {{ $categoryList }}
+                                </ul>
                             </div>
                         </div>
-                    </div> --}}
-                    
-                    
+                        
+                        <div>
+                            <a class="p-4 inline-block hover:bg-gray-100 hover:text-sky-500 rounded-md" href="{{ route('about') }}">About</a>
+                        </div>
+                    </div>
+                  
+                     
                 </div>
-                <div class="p-2">
+                <div class="pt-5 flex">
+                    <div class="">
+                        <form class="p-4 mr-6 overflow-hidden w-96 flex" action="{{ route('index') }}" method="get">
+                        <input class="rounded-full w-full border p-1 px-3 pr-7 -mr-8 focus:outline-none focus:shadow focus:shadow-sky-300 placeholder:text-gray-300
+                         placeholder:focus:text-sky-500 text-sky-500"
+                          type="text" name="search" placeholder="Search title, content, keyword" value="{{ request('search') }}">
+                        <button type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6" class="ionicon" viewBox="0 0 512 512"><title>Search</title><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"/></svg>
+                        </button>
+                        </form>
+                    </div>
                     @if(Auth::user())
                     <div class="flex">
                         <h1 class="p-4 text-green-500 h-4 inline">{{ Auth::user()->name }}</h1>
@@ -64,9 +68,12 @@
                     </div>
                     
                     @else
-                    <a class="inline-block p-4 text-gray-600 rounded-full hover:shadow hover:shadow-sky-500 " href="{{ route('login') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" class="ionicon" viewBox="0 0 512 512"><title>Login</title><path d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"/><path d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"/></svg>
-                    </a>
+                    <div>
+                        <a class="inline-block p-4 text-gray-600 rounded-full hover:shadow hover:shadow-sky-500 " href="{{ route('login') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6" class="ionicon" viewBox="0 0 512 512"><title>Login</title><path d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z"/><path d="M256 144c-19.72 0-37.55 7.39-50.22 20.82s-19 32-17.57 51.93C191.11 256 221.52 288 256 288s64.83-32 67.79-71.24c1.48-19.74-4.8-38.14-17.68-51.82C293.39 151.44 275.59 144 256 144z"/></svg>
+                        </a>
+                    </div>
+                   
                     @endif
                 </div>
             </div>
@@ -84,7 +91,7 @@
 
         {{-- Content here --}}
 
-        <div class="container max-w-7xl mx-auto bg-white shadow-2xl shadow-gray-300 ">
+        <div class="container max-w-7xl min-h-screen mx-auto bg-white shadow-2xl shadow-gray-300 ">
 
             <div class="flex flex-row">
 
@@ -129,10 +136,11 @@
                     <div class="font-bold text-gray-500">
                         <h1 class="pb-3">Follow Us</h1>
                         <div class="flex flex-row space-x-1">
-                            <a href="">
+                            <a href="https://www.facebook.com/Karwan-Hedayat-Trading-Company-%D8%B4%D8%B1%DA%A9%D8%AA-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA%DB%8C-%DA%A9%D8%A7%D8%B1%D9%88%D8%A7%D9%86-%D9%87%D8%AF%D8%A7%DB%8C%D8%AA-1611065479111295" target="_blank">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 opacity-60 hover:opacity-100" class="ionicon" viewBox="0 0 512 512"><title></title><path d="M480 257.35c0-123.7-100.3-224-224-224s-224 100.3-224 224c0 111.8 81.9 204.47 189 221.29V322.12h-56.89v-64.77H221V208c0-56.13 33.45-87.16 84.61-87.16 24.51 0 50.15 4.38 50.15 4.38v55.13H327.5c-27.81 0-36.51 17.26-36.51 35v42h62.12l-9.92 64.77H291v156.54c107.1-16.81 189-109.48 189-221.31z" fill-rule="evenodd"/></svg>
                             </a>
-                            <a href="">
+                            
+                            <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 opacity-60 hover:opacity-100" class="ionicon" viewBox="0 0 512 512"><title></title><path d="M508.64 148.79c0-45-33.1-81.2-74-81.2C379.24 65 322.74 64 265 64h-18c-57.6 0-114.2 1-169.6 3.6C36.6 67.6 3.5 104 3.5 149 1 184.59-.06 220.19 0 255.79q-.15 53.4 3.4 106.9c0 45 33.1 81.5 73.9 81.5 58.2 2.7 117.9 3.9 178.6 3.8q91.2.3 178.6-3.8c40.9 0 74-36.5 74-81.5 2.4-35.7 3.5-71.3 3.4-107q.34-53.4-3.26-106.9zM207 353.89v-196.5l145 98.2z"/></svg>
                             </a>
                             <a href="">

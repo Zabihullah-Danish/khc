@@ -3,7 +3,7 @@
         Dashboard
     </x-slot>
     <div class="p-2">
-        <div class="grid grid-cols-3 gap-4 p-10">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-10">
             <div class="w-60 h-60 border rounded-md overflow-hidden shadow-md hover:shadow hover:shadow-sky-500 transition-all">
                 <div class="h-5/6 bg-fuchsia-300 py-14 text-7xl hover:text-8xl transition-all duration-700 cursor-pointer">
                     <h1 class=" text-gray-200 text-center">{{ $users->count() }}</h1>

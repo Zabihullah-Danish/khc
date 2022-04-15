@@ -41,7 +41,7 @@
   
     <div class="p-2">
 
-        @foreach ($posts as $post)
+        @forelse ($posts as $post)
             
         <a class="@if($post->category->category == 'about') hidden @endif" href="{{ route('viewPostDetails',$post) }}">
             <div class="flex flex-row rounded-md bg-white border border-gray-100 overflow-hidden mb-3 shadow-sm hover:shadow-lg hover:shadow-sky-100 hover:border-gray-200 transition-all duration-500">
@@ -71,12 +71,14 @@
                 </div>
             </div>
         </a>
-        @endforeach
+        @empty
+            <p class="text-center text-gray-400 text-xl" >No posts find please check later <span class="text-blue-400 underline italic"><a href="{{ route('index') }}">back</a></span></p>
+        @endforelse
 
     
         <div class="w-full text-center my-2">
             <div class="">
-                <h1 class="shadow-lg shadow-gray-300 inline-block rounded-md">{{ $posts->links() }}</h1>
+                {{-- <h1 class="shadow-lg shadow-gray-300 inline-block rounded-md">{{ $posts->links() }}</h1> --}}
             </div>
             
         </div>
