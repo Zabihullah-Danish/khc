@@ -69,8 +69,5 @@ class HomeController extends Controller
         return view('home.about', compact('ads','sliders','categories'));
     }
 
-    public function search(Request $request)
-    {
-        return redirect()->back();
-    }
+   
 }
