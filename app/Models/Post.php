@@ -2,22 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
-        'user_id','category_id','title', 'content','image'
+        'user_id','category_id','title', 'content','image',
     ];
-
-    public function getRouteKeyName()
-    {
-        return 'title';
-    }
 
     public function user()
     {

@@ -19,14 +19,16 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {   
         
-        $credentails = $request->validate([
+        $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required',
            
         ]);
 
+        
+        // dd($credentails);
        
-        if(Auth::attempt($credentails))
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password]))
         {
             if(!Auth::user()->blocked)
             {
@@ -34,13 +36,11 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
             
-            return back()->with('warning',"Your user blocked contact administrator for help.");
+            return redirect()->back()->with('warning',"Your user blocked contact administrator for help.");
             
         }
 
-        return back()->withErrors([
-            'loginError' => 'Email Or Password Incorrect!',
-        ]);
+        return back()->with('danger', 'Email Or Password Incorrect!');
     }
 
     public function logout(Request $request)

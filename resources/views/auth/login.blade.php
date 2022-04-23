@@ -10,9 +10,7 @@
         </a>
     </div>
     <div class="p-1">
-        @error('loginError')
-            <p class="p-2 text-red-500">{{ $message }}</p>
-        @enderror
+        
         <x-message />
         <form action="{{ route('authenticate') }}" method="POST">
             @csrf

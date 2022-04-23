@@ -64,7 +64,7 @@
                                 <span class="mt-1 pt-0.5 text-xs">{{ $post->views->count() }}</span>
                             </div>
                             <p class="text-xs text-gray-400 mt-1">{{ ucfirst($post->category->category) }}</p>
-                            <p class="text-xs text-gray-400 mt-1">{{ $post->created_at }}</p>
+                            <p class="text-xs text-gray-400 mt-1">{{ date_format($post->created_at,"Y-m-d") }}</p>
                         </div>
                         
                     </div>

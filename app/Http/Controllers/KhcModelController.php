@@ -53,6 +53,39 @@ class KhcModelController extends Controller
         $user->update([
             'is_admin' => $request->admin,
         ]);
+        $user->khc_model()->update([
+            'users' => 1,
+            'posts' => 1,
+            'tags'  => 1,
+            'ads'   => 1,
+            'slider'=> 1
+        ]);
+        $user->permission()->update([
+            //user
+            'create_user' => 1,
+            'view_user' => 1,
+            'edit_user' => 1,
+            'delete_user' => 1,
+            //post
+            'create_post' => 1,
+            'view_post' => 1,
+            'edit_post' => 1,
+            'delete_post' => 1,
+            //tag
+            'create_tag' => 1,
+            'edit_tag' => 1,
+            'delete_tag' => 1,
+            //ads
+            'create_ads' => 1,
+            'view_ads' => 1,
+            'edit_ads' => 1,
+            'delete_ads' => 1,
+            //slider
+            'create_slider' => 1,
+            'view_slider' => 1,
+            'edit_slider' => 1,
+            'delete_slider' => 1,
+        ]);
 
         return redirect()->back()->with('success','User Level Updated Successfully.');
     }

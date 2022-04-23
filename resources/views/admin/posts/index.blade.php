@@ -41,7 +41,6 @@
                         <tr class="border h-16 hover:bg-sky-50 align-baseline">
                             <td class="pl-2">{{ $post->id }}</td>
                             <td class="pl-2 text-justify">{{ $post->title }}</td>
-                           
                             <td class="pl-2">{{ $post->created_at }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td class="pl-2">

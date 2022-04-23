@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->permission->create_user)
+        if(!auth()->user()->permission->create_user OR !auth()->user()->khc_model->users)
         {
             abort(403);
         }
@@ -140,13 +140,24 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+            if(!$request->password)
+            {
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => $user->password,
+                    
+                ]);
+            }else{
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password) ?? $user->password,
+                    
+                ]);
+            }
+           
             
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                
-            ]);
             return redirect()->back()->with('message','User updated');
         
         

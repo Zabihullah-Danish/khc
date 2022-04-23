@@ -86,13 +86,6 @@ Route::post('/login', [LoginController::class,'authenticate'])->name('authentica
 //search content routes
 // Route::get('/search',[HOmeController::class,'search'])->name('search');
 
-//test route
-Route::get('/test/users/photo',function(Request $request){
-    if($request->is('test/*')){
-        return "cookie";
-    }
-})->name('test');
-
 //fall back route
 Route::fallback(function(){
     return redirect()->back()->with('warning','Unknown Data');
